@@ -5,14 +5,12 @@ export default function Search() {
   const [value, setValue] = React.useState("");
   return (
     <div className={styles.search}>
-      <div className="container">
-        <input
-          type="text"
-          className={styles.field}
-          placeholder="Поиск"
-          onChange={(e) => setValue(e.target.value)}
-        />
-      </div>
+      <input
+        type="text"
+        className={styles.field}
+        placeholder="Поиск"
+        onChange={(e) => setValue(e.target.value)}
+      />
     </div>
   );
 }

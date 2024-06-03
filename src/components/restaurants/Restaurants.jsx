@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Restaurants.module.css";
 
-export default function Restaurants() {
-  let restaurants = [];
+import Card from "../card/Card";
 
-  useEffect(() => {
+export default function Restaurants({ state }) {
+  const [restaurants, setRestaurants] = useState();
+
+  React.useEffect(() => {
     fetch("https://panjakent.shop:3000/restaurants")
       .then((response) => response.json())
-      .then((data) => (restaurants = data))
-      .then((data) => console.log(data))
-      .catch((error) => {
-        console.error("Error fetching restaurants: ", error);
-      });
+      .then((data) => setRestaurants(data));
   }, []);
 
   return (
-    <section className={styles.restaurants}>
-      <div className={styles.cards}>
-        {restaurants.length !== 0 && console.log("asdf")}
+    <section>
+      <div className="container">
+        <h2 className={styles.title}>Рестораны</h2>
+        <div className={styles.cards}>
+          {(restaurants ? restaurants : [...Array(5)]).map(
+            (restaurant, index) =>
+              restaurants ? (
+                <Card key={restaurant.id} card={restaurant} state={state} />
+              ) : (
+                <Card key={index} isLoading={true} />
+              )
+          )}
+        </div>
       </div>
     </section>
   );
